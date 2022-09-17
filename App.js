@@ -4,6 +4,7 @@ import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import AuthStack from './src/navigation/AuthStack';
 import {NavigationContainer} from '@react-navigation/native';
+import AppStack from './src/navigation/AppStack';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -20,7 +21,7 @@ const App = () => {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <NavigationContainer>
-        <AuthStack />
+        {true ? <AuthStack /> : <AppStack />}
       </NavigationContainer>
     </SafeAreaView>
   );

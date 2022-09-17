@@ -1,11 +1,12 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import Home from '../screen/Home';
+import CustomButton from '../components/CustomButton';
 
-const MainView = () => {
+const MainView = ({children, navigation}) => {
   return (
     <View style={styles.container}>
-      <Home />
+      <CustomButton label={'Header'} onPress={() => navigation.goBack()} />
+      {children}
     </View>
   );
 };

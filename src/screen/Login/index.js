@@ -52,7 +52,12 @@ const LoginScreen = ({navigation}) => {
           fieldButtonFunction={() => {}}
         />
 
-        <CustomButton label={'Login'} onPress={() => {}} />
+        <CustomButton
+          label={'Login'}
+          onPress={() => {
+            navigation.navigate('AppStack');
+          }}
+        />
 
         <View
           // eslint-disable-next-line react-native/no-inline-styles
