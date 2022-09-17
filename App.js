@@ -2,7 +2,8 @@ import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import MainView from './src/layouts/MainView';
+import AuthStack from './src/navigation/AuthStack';
+import {NavigationContainer} from '@react-navigation/native';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -18,7 +19,9 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <MainView />
+      <NavigationContainer>
+        <AuthStack />
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
