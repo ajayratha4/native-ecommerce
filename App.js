@@ -2,10 +2,9 @@ import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Provider} from 'react-redux';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import AuthStack from './src/navigation/AuthStack';
 import {NavigationContainer} from '@react-navigation/native';
-import AppStack from './src/navigation/AppStack';
 import store from './src/redux/store';
+import Navigation from './src/navigation';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -15,6 +14,8 @@ const App = () => {
     flex: 1,
   };
 
+  console.log('start');
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -23,7 +24,7 @@ const App = () => {
       />
       <Provider store={store}>
         <NavigationContainer>
-          {true ? <AuthStack /> : <AppStack />}
+          <Navigation />
         </NavigationContainer>
       </Provider>
     </SafeAreaView>

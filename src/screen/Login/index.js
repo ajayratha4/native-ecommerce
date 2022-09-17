@@ -8,30 +8,40 @@ import CustomButton from '../../components/CustomButton';
 import InputField from '../../components/InputField';
 import useAxios from '../../apis/useAxios';
 import {API} from '../../apis/const';
-import {useSelector} from 'react-redux';
+import {getData, storeData} from '../../utils/asyncStorage';
+import {useDispatch} from 'react-redux';
+import {setlogin} from '../../redux/settings';
 
 const LoginScreen = ({navigation}) => {
-  const sidebar = useSelector(state => state.settings.sidebar);
-  console.log(sidebar);
+  const dispatch = useDispatch();
   const [value, setValue] = useState({});
 
-  const {loading, refetch} = useAxios(API.Login, {});
+  const {loading, refetch} = useAxios(API.Login, {skip: true});
 
   const onLogin = () => {
     const {email, password} = value;
+    console.log(email, password, 'email, password');
     if (email && password) {
       refetch({
         params: {
           email,
           password,
         },
-        onCompleted: (res, err) => {
+        onCompleted: async (res, err) => {
+          console.log(res, err);
+
           if (err) {
             console.log(err);
             Alert.alert(err.message);
           } else {
+            storeData(res.token);
+            dispatch(setlogin(true));
             console.log(res);
-            navigation.navigate('AppStack');
+            const checkLogin = await getData();
+
+            console.log(checkLogin);
+
+            // navigation.navigate('AppStack');
           }
         },
       });

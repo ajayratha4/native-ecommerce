@@ -1,6 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import CustomButton from '../../components/CustomButton';
+import Product from '../Product';
 
 const Home = ({navigation}) => {
   return (
@@ -9,7 +10,7 @@ const Home = ({navigation}) => {
         label={'Login'}
         onPress={() => navigation.navigate('Settings')}
       />
-      <Text> Home</Text>
+      <Product />
     </View>
   );
 };
