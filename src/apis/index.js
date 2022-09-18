@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://192.168.4.228:8080',
+  baseURL: 'https://test-uimx.onrender.com',
 });
 
 const excludeAuthorization = ['/login', '/signup', '/'];
@@ -14,9 +14,9 @@ instance.interceptors.request.use(
 
     if (!includeAuthorizationToken) {
       //   config.headers["Authorization"] = `Bearer getItemInLocalStorage("token")`;
-      // config.headers.Cookie = document.cookie;
+      config.headers.Cookie = document.cookie;
     }
-    //config.headers["Access-Control-Allow-Origin"] = "*";
+    config.headers['Access-Control-Allow-Origin'] = '*';
 
     return config;
   },

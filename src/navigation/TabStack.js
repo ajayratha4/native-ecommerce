@@ -5,6 +5,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Cart from '../screen/Cart';
 import Home from '../screen/Home';
 import Profile from '../screen/Profile';
+import Product from '../screen/Product';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ const TabStack = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={Product}
         options={{
           //   tabBarBadge: 3,
           tabBarBadgeStyle: {backgroundColor: '#5872ff'},
