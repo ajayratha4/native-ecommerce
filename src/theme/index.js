@@ -12,7 +12,8 @@ export const lightTheme = {
   dark: false,
   colors: {
     ...MD3LightTheme.colors,
-    // primary: '#3333cc',
+    primary: '#8d60e1',
+    onPrimary: 'white',
   },
 };
 export const darkTheme = {
@@ -21,6 +22,7 @@ export const darkTheme = {
   dark: true,
   colors: {
     ...MD3DarkTheme.colors,
-    // primary: '#3333cc',
+    primary: 'red',
+    onPrimary: 'white',
   },
 };

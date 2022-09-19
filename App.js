@@ -10,7 +10,7 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   // const isDarkMode = true;
 
-  console.log('start');
+  console.log('start', isDarkMode);
 
   return (
     <Provider store={store}>

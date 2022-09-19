@@ -5,7 +5,10 @@ import CustomButton from '../components/CustomButton';
 const AppView = ({children, navigation}) => {
   return (
     <View style={styles.container}>
-      <CustomButton label={'Header'} onPress={() => navigation.goBack()} />
+      <CustomButton
+        label={'Header'}
+        onPress={() => navigation.navigate('Settings')}
+      />
       {children}
     </View>
   );
