@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, useColorScheme} from 'react-native';
+import {useColorScheme} from 'react-native';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import store from './src/redux/store';
@@ -15,11 +15,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider theme={() => theme(isDarkMode)}>
-        <SafeAreaView>
-          <NavigationContainer>
-            <Navigation />
-          </NavigationContainer>
-        </SafeAreaView>
+        <NavigationContainer>
+          <Navigation />
+        </NavigationContainer>
       </PaperProvider>
     </Provider>
   );
