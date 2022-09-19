@@ -1,25 +1,38 @@
 import * as React from 'react';
-import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
-
-const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
+import {View} from 'react-native';
+import {Button, Card, Title, Paragraph, Text} from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ProductCard = ({item}) => {
+  const {name, price, image, review} = item;
+
   return (
-    <Card>
-      <Card.Title
-        title="Card Title"
-        subtitle="Card Subtitle"
-        left={LeftContent}
-      />
+    <Card style={{flex: 1, margin: 5}}>
+      <Card.Cover source={{uri: image[0]}} />
       <Card.Content>
-        <Title>Card title</Title>
-        <Paragraph>Card content</Paragraph>
+        <Text variant="bodyLarge">{name}</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{textDecorationLine: 'line-through', marginRight: 2}}>
+              {price.actualPrice}
+            </Text>
+            <Text>₹{price.discountPrice}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Ionicons name="star-sharp" />
+            <Ionicons name="star-sharp" />
+            <Ionicons name="star-sharp" />
+            <Ionicons name="star-sharp" />
+          </View>
+        </View>
       </Card.Content>
-      <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
-      <Card.Actions>
-        <Button>Cancel</Button>
-        <Button>Ok</Button>
-      </Card.Actions>
+
+      <Button
+        mode="Outlined"
+        size="small"
+        style={{alignItems: 'center', justifyContent: 'center'}}>
+        Add to cart
+      </Button>
     </Card>
   );
 };

@@ -13,11 +13,9 @@ const Product = () => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}>
+    <View>
       <FlatList
+        numColumns={2}
         data={response}
         renderItem={ProductCard}
         keyExtractor={item => item._id}
