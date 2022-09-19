@@ -20,8 +20,8 @@ const SignInScreen = ({navigation}) => {
   const onCompleted = async (res, err) => {
     if (err) {
       showAlert(err.message);
-    } else {
-      storeData(res.token);
+    } else if (res?.data?.token) {
+      storeData(res.data.token);
       dispatch(setlogin(true));
     }
   };

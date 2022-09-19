@@ -1,9 +1,17 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 import AuthLayout from '../../components/AuthLayout';
+import {setlogin} from '../../redux/settings';
+import {storeData} from '../../utils/asyncStorage';
 
 const Onboarding = ({navigation}) => {
+  const dispatch = useDispatch();
+  const onSkip = () => {
+    storeData('null');
+    dispatch(setlogin(true));
+  };
   return (
     <AuthLayout>
       <View style={{flex: 1, justifyContent: 'space-evenly'}}>
@@ -37,6 +45,7 @@ const Onboarding = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'flex-start',
           }}
+          onPress={onSkip}
           labelStyle={{fontSize: 18}}
           mode="text">
           skip

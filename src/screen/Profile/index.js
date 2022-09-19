@@ -1,25 +1,34 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
-import MainView from '../../layouts/AppView';
-import CustomButton from '../../components/CustomButton';
+import {Button, Text, useTheme} from 'react-native-paper';
 import {removeValue} from '../../utils/asyncStorage';
 import {useDispatch} from 'react-redux';
 import {setlogin} from '../../redux/settings';
-
 const Profile = ({navigation}) => {
   const dispatch = useDispatch();
+
+  const {colors} = useTheme();
 
   const logOut = () => {
     dispatch(setlogin(false));
     removeValue();
   };
+
   return (
-    <MainView navigation={navigation}>
-      <View>
-        <Text>Profile</Text>
-        <CustomButton label={'Logout'} onPress={logOut} />
-      </View>
-    </MainView>
+    <View style={{flex: 1, backgroundColor: colors.background}}>
+      <Text>Profile</Text>
+      <Button
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        }}
+        labelStyle={{fontSize: 18}}
+        mode="text"
+        onPress={logOut}>
+        logOut
+      </Button>
+    </View>
   );
 };
 

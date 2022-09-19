@@ -1,12 +1,15 @@
 import React from 'react';
 import {Appbar} from 'react-native-paper';
 
-const CustomNavigationBar = ({navigation, back}) => {
+const CustomNavigationBar = props => {
+  const {navigation, back, route} = props;
   return (
-    <Appbar.Header>
-      {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
-      <Appbar.Content title="My awesome app" />
-    </Appbar.Header>
+    back && (
+      <Appbar.Header>
+        <Appbar.BackAction onPress={navigation.goBack} />
+        <Appbar.Content title={route.name} />
+      </Appbar.Header>
+    )
   );
 };
 

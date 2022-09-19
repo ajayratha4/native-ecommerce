@@ -7,7 +7,6 @@ import {ActivityIndicator} from 'react-native-paper';
 
 const Product = () => {
   const {response, loading} = useAxios(API.Product);
-  console.log(response, 'response');
 
   if (loading) {
     return <ActivityIndicator size={50} style={{flex: 1}} animating={true} />;
@@ -17,8 +16,6 @@ const Product = () => {
     <View
       style={{
         flex: 1,
-        paddingHorizontal: 5,
-        marginVertical: 5,
       }}>
       <FlatList
         data={response}

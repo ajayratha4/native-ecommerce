@@ -7,7 +7,7 @@ const AppView = ({children, navigation}) => {
     <View style={styles.container}>
       <CustomButton
         label={'Header'}
-        onPress={() => navigation.navigate('Settings')}
+        onPress={() => navigation.navigate('Product')}
       />
       {children}
     </View>

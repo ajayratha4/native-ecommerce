@@ -1,4 +1,3 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Settings from '../screen/Settings';
@@ -13,7 +12,7 @@ const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         header: props => <CustomNavigationBar {...props} />,
       }}>
       <Stack.Screen name="TabStack" component={TabStack} />
@@ -25,3 +24,38 @@ const AppStack = () => {
 };
 
 export default AppStack;
+
+// import * as React from 'react';
+// import {useState} from 'react';
+// import {BottomNavigation} from 'react-native-paper';
+// import Cart from '../screen/Cart';
+
+// const AppStack = () => {
+//   const [index, setIndex] = useState(0);
+//   const routes = [
+//     {
+//       key: 'product',
+//       title: 'Product',
+//       focusedIcon: 'gift',
+//       unfocusedIcon: 'gift-outline',
+//     },
+//     {key: 'cart', title: 'Cart', focusedIcon: 'album'},
+//     {key: 'settings', title: 'Settings', focusedIcon: 'history'},
+//   ];
+
+//   const renderScene = BottomNavigation.SceneMap({
+//     product: Product,
+//     cart: Cart,
+//     settings: Settings,
+//   });
+
+//   return (
+//     <BottomNavigation
+//       navigationState={{index, routes}}
+//       onIndexChange={setIndex}
+//       renderScene={renderScene}
+//     />
+//   );
+// };
+
+// export default AppStack;
