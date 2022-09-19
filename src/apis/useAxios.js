@@ -33,7 +33,7 @@ const useAxios = (path, rest = {}) => {
       }
     } catch (err) {
       setError(err);
-      apionCompleted(null, err);
+      apionCompleted(null, err.response.data);
     } finally {
       check.current = false;
       setLoading(false);

@@ -1,9 +1,3 @@
-// import {DefaultTheme} from 'react-native-paper';
-// import {
-//   NavigationContainer,
-//   DarkTheme as NavigationDarkTheme,
-//   DefaultTheme as NavigationDefaultTheme,
-// } from '@react-navigation/native';
 import {MD3LightTheme, MD3DarkTheme} from 'react-native-paper';
 
 export const lightTheme = {
@@ -12,8 +6,10 @@ export const lightTheme = {
   dark: false,
   colors: {
     ...MD3LightTheme.colors,
-    primary: '#8d60e1',
-    onPrimary: 'white',
+    background: '#f7f7f7',
+    primary: '#6b5dd3',
+    secondary: '#4388ff',
+    onPrimary: '#f7f7f7',
   },
 };
 export const darkTheme = {
@@ -22,7 +18,9 @@ export const darkTheme = {
   dark: true,
   colors: {
     ...MD3DarkTheme.colors,
-    primary: 'red',
-    onPrimary: 'white',
+    background: '#22252f',
+    primary: '#6b5dd3',
+    secondary: '#4388ff',
+    onPrimary: '#f7f7f7',
   },
 };

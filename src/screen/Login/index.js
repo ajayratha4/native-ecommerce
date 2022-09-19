@@ -1,49 +1,45 @@
 import React from 'react';
 import {useState} from 'react';
-import {View, Alert, TouchableOpacity} from 'react-native';
-
-import {Button, TextInput, Text, useTheme} from 'react-native-paper';
+import {View, TouchableOpacity} from 'react-native';
+import {Button, TextInput, Text} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {API} from '../../apis/const';
 import useAxios from '../../apis/useAxios';
 import AuthLayout from '../../components/AuthLayout';
+import useSnackbar from '../../components/hooks/useSnackbar';
 import {setlogin} from '../../redux/settings';
-import {getData, storeData} from '../../utils/asyncStorage';
+import {storeData} from '../../utils/asyncStorage';
 
 const SignInScreen = ({navigation}) => {
-  const {colors} = useTheme();
+  const {showAlert} = useSnackbar();
   const dispatch = useDispatch();
   const [value, setValue] = useState({});
 
   const {loading, refetch} = useAxios(API.Login, {skip: true});
 
+  const onCompleted = async (res, err) => {
+    if (err) {
+      showAlert(err.message);
+    } else {
+      storeData(res.token);
+      dispatch(setlogin(true));
+    }
+  };
   const onLogin = () => {
     const {email, password} = value;
-    console.log(email, password, 'email, password');
-    if (email && password) {
-      refetch({
-        params: {
-          email,
-          password,
-        },
-        onCompleted: async (res, err) => {
-          console.log(res, err);
 
-          if (err) {
-            console.log(err);
-            Alert.alert(err.message);
-          } else {
-            storeData(res.token);
-            dispatch(setlogin(true));
-            console.log(res);
-            const checkLogin = await getData();
-
-            console.log(checkLogin);
-          }
-        },
-      });
-    } else {
+    if (!email || !password) {
+      showAlert('Email / Password should not be empty!');
+      return null;
     }
+
+    refetch({
+      params: {
+        email,
+        password,
+      },
+      onCompleted,
+    });
   };
 
   const onChange = (newValue, key) => {
@@ -72,14 +68,30 @@ const SignInScreen = ({navigation}) => {
           right={<TextInput.Icon icon="eye" />}
         />
 
-        <TouchableOpacity style={{marginTop: 20}}>
-          <Text style={{color: colors.text, marginTop: 15}}>
-            Forgot password?
-          </Text>
-        </TouchableOpacity>
-        <View style={{marginTop: 50}}>
+        <Button
+          style={{
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            marginTop: 15,
+          }}
+          labelStyle={{fontSize: 18}}
+          mode="text">
+          Forgot password?
+        </Button>
+        <Button
+          style={{
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}
+          labelStyle={{fontSize: 18}}
+          mode="text"
+          onPress={() => navigation.navigate('Register')}>
+          New to the app? Register
+        </Button>
+
+        <View style={{marginTop: 50, alignItems: 'center'}}>
           <Button
-            style={{width: '100%'}}
+            style={{width: '80%', height: 50, justifyContent: 'center'}}
             loading={loading}
             disabled={loading}
             labelStyle={{fontSize: 18, fontWeight: 'bold'}}
@@ -88,13 +100,6 @@ const SignInScreen = ({navigation}) => {
             Sign In
           </Button>
         </View>
-
-        <Button
-          style={{marginTop: 15}}
-          mode="text"
-          onPress={() => navigation.navigate('Register')}>
-          New to the app? Register
-        </Button>
       </View>
     </AuthLayout>
   );

@@ -4,7 +4,7 @@ import {Button, Dialog, Paragraph, Snackbar} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import AppStack from '../navigation/AppStack';
 import AuthStack from '../navigation/AuthStack';
-import {setlogin} from '../redux/settings';
+import {openAlertSnackbar, setlogin} from '../redux/settings';
 import {getData} from '../utils/asyncStorage';
 import * as Animatable from 'react-native-animatable';
 
@@ -12,6 +12,8 @@ const MainView = () => {
   console.log('start');
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.settings.isLogin);
+  const {open, message} = useSelector(state => state.settings.snackbar);
+
   // const isLogin = true;
   useEffect(() => {
     getData().then(res => {
@@ -27,9 +29,11 @@ const MainView = () => {
         {isLogin ? <AppStack /> : <AuthStack />}
       </NavigationContainer>
 
-      {false && (
-        <Snackbar visible={true} onDismiss={() => console.log('lo')}>
-          Hey there! I'm a Snackbar.
+      {open && (
+        <Snackbar
+          visible={open}
+          onDismiss={() => dispatch(openAlertSnackbar(null))}>
+          {message}
         </Snackbar>
       )}
       {false && (

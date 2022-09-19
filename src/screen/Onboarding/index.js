@@ -9,28 +9,36 @@ const Onboarding = ({navigation}) => {
       <View style={{flex: 1, justifyContent: 'space-evenly'}}>
         <Text>logo</Text>
       </View>
-      <View style={{flex: 1, justifyContent: 'space-evenly'}}>
+      <View
+        style={{
+          flex: 1,
+          width: '100%',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+        }}>
         <Button
-          style={{width: '100%'}}
-          labelStyle={{fontSize: 18}}
+          style={{width: '80%', height: 50, justifyContent: 'center'}}
+          labelStyle={{fontSize: 18, fontWeight: 'bold'}}
           mode="contained"
           onPress={() => navigation.navigate('Login')}>
           Sign In
         </Button>
 
         <Button
-          style={{width: '100%'}}
-          labelStyle={{fontSize: 18}}
+          style={{width: '80%', height: 50, justifyContent: 'center'}}
+          labelStyle={{fontSize: 18, fontWeight: 'bold'}}
           mode="contained"
           onPress={() => navigation.navigate('Register')}>
           Sign Up
         </Button>
 
         <Button
-          style={{width: '100%'}}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}
           labelStyle={{fontSize: 18}}
-          mode="text"
-          onPress={() => {}}>
+          mode="text">
           skip
         </Button>
       </View>

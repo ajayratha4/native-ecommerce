@@ -1,8 +1,8 @@
 import React from 'react';
 import {useState} from 'react';
-import {View, Alert, TouchableOpacity} from 'react-native';
+import {View, Alert} from 'react-native';
 
-import {Button, TextInput, Text, useTheme} from 'react-native-paper';
+import {Button, TextInput, Text} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {API} from '../../apis/const';
 import useAxios from '../../apis/useAxios';
@@ -11,15 +11,14 @@ import {setlogin} from '../../redux/settings';
 import {getData, storeData} from '../../utils/asyncStorage';
 
 const SignInScreen = ({navigation}) => {
-  const {colors} = useTheme();
   const dispatch = useDispatch();
   const [value, setValue] = useState({});
 
   const {loading, refetch} = useAxios(API.Login, {skip: true});
 
   const onLogin = () => {
-    const {email, password} = value;
-    console.log(email, password, 'email, password');
+    const {email, name, password, confirmPassword} = value;
+
     if (email && password) {
       refetch({
         params: {
@@ -87,24 +86,28 @@ const SignInScreen = ({navigation}) => {
         />
         <TextInput
           style={{marginTop: 20}}
-          label="Password"
+          label="Confirm Password"
           mode="outlined"
-          placeholder="Your Password"
+          placeholder="Confirm Password"
           value={value.password}
-          onChangeText={newValue => onChange(newValue, 'password')}
+          onChangeText={newValue => onChange(newValue, 'confirmPassword')}
           left={<TextInput.Icon icon="lock" />}
           right={<TextInput.Icon icon="eye" />}
         />
-
         <Button
-          style={{marginTop: 20}}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+          }}
+          labelStyle={{fontSize: 18}}
           mode="text"
           onPress={() => navigation.navigate('Login')}>
-          Already registered?
+          New to the app? Register
         </Button>
-        <View style={{marginTop: 50}}>
+
+        <View style={{marginTop: 50, alignItems: 'center'}}>
           <Button
-            style={{width: '100%'}}
+            style={{width: '80%', height: 50, justifyContent: 'center'}}
             labelStyle={{fontSize: 18, fontWeight: 'bold'}}
             mode="contained"
             onPress={onLogin}>
