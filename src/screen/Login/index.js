@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import {SafeAreaView, View, Alert, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {useState} from 'react';
+import {View, Alert, TouchableOpacity} from 'react-native';
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import CustomButton from '../../components/CustomButton';
-import InputField from '../../components/InputField';
-import useAxios from '../../apis/useAxios';
-import {API} from '../../apis/const';
-import {getData, storeData} from '../../utils/asyncStorage';
+import {Button, TextInput, Text, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {API} from '../../apis/const';
+import useAxios from '../../apis/useAxios';
+import AuthLayout from '../../components/AuthLayout';
 import {setlogin} from '../../redux/settings';
+import {getData, storeData} from '../../utils/asyncStorage';
 
-const LoginScreen = ({navigation}) => {
+const SignInScreen = ({navigation}) => {
+  const {colors} = useTheme();
   const dispatch = useDispatch();
   const [value, setValue] = useState({});
 
@@ -40,8 +39,6 @@ const LoginScreen = ({navigation}) => {
             const checkLogin = await getData();
 
             console.log(checkLogin);
-
-            // navigation.navigate('AppStack');
           }
         },
       });
@@ -58,68 +55,51 @@ const LoginScreen = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{paddingHorizontal: 25}}>
-        <View style={{alignItems: 'center'}}></View>
-
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: '500',
-            color: '#333',
-            marginBottom: 30,
-          }}>
-          Login
-        </Text>
-
-        <InputField
-          label={'Email ID'}
+    <AuthLayout>
+      <View>
+        <TextInput
+          label="Email"
+          mode="outlined"
+          placeholder="Your Email"
           value={value.email}
-          onChangeText={value => onChange(value, 'email')}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          keyboardType="email-address"
+          onChangeText={newValue => onChange(newValue, 'email')}
+          left={<TextInput.Icon icon="email" />}
         />
-
-        <InputField
-          label={'Password'}
+        <TextInput
+          style={{marginTop: 20}}
+          label="Password"
+          mode="outlined"
+          placeholder="Your Password"
           value={value.password}
-          onChangeText={value => onChange(value, 'password')}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          inputType="password"
-          fieldButtonLabel={'Forgot?'}
-          fieldButtonFunction={() => {}}
+          onChangeText={newValue => onChange(newValue, 'password')}
+          left={<TextInput.Icon icon="lock" />}
+          right={<TextInput.Icon icon="eye" />}
         />
 
-        <CustomButton label={'Login'} onPress={onLogin} />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}>
-          <Text>New to the app?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color: '#091a6e', fontWeight: '700'}}> Register</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={{marginTop: 20}}>
+          <Text style={{color: colors.primary, marginTop: 15}}>
+            Forgot password?
+          </Text>
+        </TouchableOpacity>
+        <View style={{marginTop: 50}}>
+          <Button
+            style={{width: '100%'}}
+            labelStyle={{fontSize: 18, fontWeight: 'bold'}}
+            mode="contained"
+            onPress={onLogin}>
+            Sign In
+          </Button>
         </View>
+
+        <Button
+          style={{marginTop: 15}}
+          mode="text"
+          onPress={() => navigation.navigate('Register')}>
+          New to the app? Register
+        </Button>
       </View>
-    </SafeAreaView>
+    </AuthLayout>
   );
 };
 
-export default LoginScreen;
+export default SignInScreen;

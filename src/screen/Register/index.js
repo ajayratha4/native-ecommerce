@@ -1,149 +1,119 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import {useState} from 'react';
+import {View, Alert, TouchableOpacity} from 'react-native';
 
-import DatePicker from 'react-native-date-picker';
+import {Button, TextInput, Text, useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import {API} from '../../apis/const';
+import useAxios from '../../apis/useAxios';
+import AuthLayout from '../../components/AuthLayout';
+import {setlogin} from '../../redux/settings';
+import {getData, storeData} from '../../utils/asyncStorage';
 
-import InputField from '../../components/InputField';
+const SignInScreen = ({navigation}) => {
+  const {colors} = useTheme();
+  const dispatch = useDispatch();
+  const [value, setValue] = useState({});
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+  const {loading, refetch} = useAxios(API.Login, {skip: true});
 
-import CustomButton from '../../components/CustomButton';
+  const onLogin = () => {
+    const {email, password} = value;
+    console.log(email, password, 'email, password');
+    if (email && password) {
+      refetch({
+        params: {
+          email,
+          password,
+        },
+        onCompleted: async (res, err) => {
+          console.log(res, err);
 
-const RegisterScreen = ({navigation}) => {
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
-  const [dobLabel, setDobLabel] = useState('Date of Birth');
+          if (err) {
+            console.log(err);
+            Alert.alert(err.message);
+          } else {
+            storeData(res.token);
+            dispatch(setlogin(true));
+            console.log(res);
+            const checkLogin = await getData();
+
+            console.log(checkLogin);
+          }
+        },
+      });
+    } else {
+    }
+  };
+
+  const onChange = (newValue, key) => {
+    setValue(previous => ({...previous, [key]: newValue}));
+  };
+
+  if (loading) {
+    <Text>loading</Text>;
+  }
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{paddingHorizontal: 25}}>
-        <View style={{alignItems: 'center'}}></View>
-
-        <Text
-          style={{
-            fontFamily: 'Roboto-Medium',
-            fontSize: 28,
-            fontWeight: '500',
-            color: '#333',
-            marginBottom: 30,
-          }}>
-          Register
-        </Text>
-
-        <InputField
-          label={'Full Name'}
-          icon={
-            <Ionicons
-              name="person-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
+    <AuthLayout>
+      <View>
+        <TextInput
+          label="Name"
+          mode="outlined"
+          placeholder="Your Name"
+          value={value.name}
+          onChangeText={newValue => onChange(newValue, 'name')}
+          left={<TextInput.Icon icon="account" />}
         />
 
-        <InputField
-          label={'Email ID'}
-          icon={
-            <MaterialIcons
-              name="alternate-email"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          keyboardType="email-address"
+        <TextInput
+          style={{marginTop: 20}}
+          label="Email"
+          mode="outlined"
+          placeholder="Your Email"
+          value={value.email}
+          onChangeText={newValue => onChange(newValue, 'email')}
+          left={<TextInput.Icon icon="email" />}
+        />
+        <TextInput
+          style={{marginTop: 20}}
+          label="Password"
+          mode="outlined"
+          placeholder="Your Password"
+          value={value.password}
+          onChangeText={newValue => onChange(newValue, 'password')}
+          left={<TextInput.Icon icon="lock" />}
+          right={<TextInput.Icon icon="eye" />}
+        />
+        <TextInput
+          style={{marginTop: 20}}
+          label="Password"
+          mode="outlined"
+          placeholder="Your Password"
+          value={value.password}
+          onChangeText={newValue => onChange(newValue, 'password')}
+          left={<TextInput.Icon icon="lock" />}
+          right={<TextInput.Icon icon="eye" />}
         />
 
-        <InputField
-          label={'Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          inputType="password"
-        />
-
-        <InputField
-          label={'Confirm Password'}
-          icon={
-            <Ionicons
-              name="ios-lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{marginRight: 5}}
-            />
-          }
-          inputType="password"
-        />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            borderBottomColor: '#ccc',
-            borderBottomWidth: 1,
-            paddingBottom: 8,
-            marginBottom: 30,
-          }}>
-          <Ionicons
-            name="calendar-outline"
-            size={20}
-            color="#666"
-            style={{marginRight: 5}}
-          />
-          <TouchableOpacity onPress={() => setOpen(true)}>
-            <Text style={{color: '#666', marginLeft: 5, marginTop: 5}}>
-              {dobLabel}
-            </Text>
-          </TouchableOpacity>
+        <Button
+          style={{marginTop: 20}}
+          mode="text"
+          onPress={() => navigation.navigate('Login')}>
+          Already registered?
+        </Button>
+        <View style={{marginTop: 50}}>
+          <Button
+            style={{width: '100%'}}
+            labelStyle={{fontSize: 18, fontWeight: 'bold'}}
+            mode="contained"
+            onPress={onLogin}>
+            Sign Up
+          </Button>
         </View>
-
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          maximumDate={new Date('2005-01-01')}
-          minimumDate={new Date('1980-01-01')}
-          onConfirm={date => {
-            setOpen(false);
-            setDate(date);
-            setDobLabel(date.toDateString());
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
-
-        <CustomButton label={'Register'} onPress={() => {}} />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}>
-          <Text>Already registered?</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={{color: '#091a6e', fontWeight: '700'}}> Login</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </AuthLayout>
   );
 };
 
-export default RegisterScreen;
+export default SignInScreen;
