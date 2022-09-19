@@ -50,10 +50,6 @@ const SignInScreen = ({navigation}) => {
     setValue(previous => ({...previous, [key]: newValue}));
   };
 
-  if (loading) {
-    <Text>loading</Text>;
-  }
-
   return (
     <AuthLayout>
       <View>
@@ -77,13 +73,15 @@ const SignInScreen = ({navigation}) => {
         />
 
         <TouchableOpacity style={{marginTop: 20}}>
-          <Text style={{color: colors.primary, marginTop: 15}}>
+          <Text style={{color: colors.text, marginTop: 15}}>
             Forgot password?
           </Text>
         </TouchableOpacity>
         <View style={{marginTop: 50}}>
           <Button
             style={{width: '100%'}}
+            loading={loading}
+            disabled={loading}
             labelStyle={{fontSize: 18, fontWeight: 'bold'}}
             mode="contained"
             onPress={onLogin}>

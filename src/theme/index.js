@@ -1,32 +1,26 @@
-import {
-  DefaultTheme as PaperDefaultTheme,
-  DarkTheme as PaperDarkTheme,
-} from 'react-native-paper';
-import {
-  DefaultTheme as NavigationDefaultTheme,
-  DarkTheme as NavigationDarkTheme,
-} from '@react-navigation/native';
+// import {DefaultTheme} from 'react-native-paper';
+// import {
+//   NavigationContainer,
+//   DarkTheme as NavigationDarkTheme,
+//   DefaultTheme as NavigationDefaultTheme,
+// } from '@react-navigation/native';
+import {MD3LightTheme, MD3DarkTheme} from 'react-native-paper';
 
-const CustomDefaultTheme = {
-  ...NavigationDefaultTheme,
-  ...PaperDefaultTheme,
+export const lightTheme = {
+  ...MD3LightTheme,
+  roundness: 2,
+  dark: false,
   colors: {
-    ...NavigationDefaultTheme.colors,
-    ...PaperDefaultTheme.colors,
-    background: '#ffffff',
-    text: '#333333',
+    ...MD3LightTheme.colors,
+    // primary: '#3333cc',
   },
 };
-
-const CustomDarkTheme = {
-  ...NavigationDarkTheme,
-  ...PaperDarkTheme,
+export const darkTheme = {
+  ...MD3DarkTheme,
+  roundness: 2,
+  dark: true,
   colors: {
-    ...NavigationDarkTheme.colors,
-    ...PaperDarkTheme.colors,
-    background: '#333333',
-    text: '#ffffff',
+    ...MD3DarkTheme.colors,
+    // primary: '#3333cc',
   },
 };
-
-export const theme = isDark => (isDark ? CustomDarkTheme : CustomDefaultTheme);

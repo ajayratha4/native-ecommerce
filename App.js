@@ -1,23 +1,21 @@
 import React from 'react';
 import {useColorScheme} from 'react-native';
 import {Provider} from 'react-redux';
-import {NavigationContainer} from '@react-navigation/native';
 import store from './src/redux/store';
-import Navigation from './src/navigation';
 import {Provider as PaperProvider} from 'react-native-paper';
-import {theme} from './src/theme';
+import {darkTheme, lightTheme} from './src/theme';
+import MainView from './src/layouts/MainView';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  // const isDarkMode = true;
 
   console.log('start');
 
   return (
     <Provider store={store}>
-      <PaperProvider theme={() => theme(isDarkMode)}>
-        <NavigationContainer>
-          <Navigation />
-        </NavigationContainer>
+      <PaperProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <MainView />
       </PaperProvider>
     </Provider>
   );
