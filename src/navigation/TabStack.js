@@ -4,9 +4,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Cart from '../screen/Cart';
 import Feather from 'react-native-vector-icons/Feather';
 import Profile from '../screen/Profile';
-import Product from '../screen/Product';
 import {useTheme} from 'react-native-paper';
 import About from '../screen/About';
+import ProductList from '../screen/ProductList';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +23,7 @@ const TabStack = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={Product}
+        component={ProductList}
         options={{
           //   tabBarBadge: 3,
           tabBarBadgeStyle: {backgroundColor: colors.primary},

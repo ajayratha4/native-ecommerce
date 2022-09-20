@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {Button, Card, Title, Paragraph, Text} from 'react-native-paper';
+import {Button, Card, Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const ProductCard = ({item}) => {
+const ProductCard = ({item, onclickProduct}) => {
   const {name, price, image, review} = item;
 
   return (
-    <Card style={{flex: 1, margin: 5}}>
+    <Card style={{flex: 1, margin: 5}} onPress={() => onclickProduct(item)}>
       <Card.Cover source={{uri: image[0]}} />
       <Card.Content>
         <Text variant="bodyLarge">{name}</Text>
