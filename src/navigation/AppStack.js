@@ -7,6 +7,7 @@ import CustomNavigationBar from './CustomNavigationBar';
 import ProductList from '../screen/ProductList';
 import Product from '../screen/ProductList/Product';
 import Checkout from '../screen/Checkout';
+import Cart from '../screen/Cart';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const AppStack = () => {
       <Stack.Screen name="About" component={About} />
       <Stack.Screen name="Product" component={Product} />
       <Stack.Screen name="Checkout" component={Checkout} />
+      <Stack.Screen name="AppCart" component={Cart} />
     </Stack.Navigator>
   );
 };

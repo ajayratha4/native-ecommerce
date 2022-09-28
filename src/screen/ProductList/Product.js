@@ -163,7 +163,11 @@ const Product = ({route, navigation}) => {
           }}
           labelStyle={{fontSize: 18, fontWeight: 'bold'}}
           mode="contained"
-          onPress={() => navigation.navigate('Cart')}>
+          onPress={() =>
+            navigation.navigate('AppCart', {
+              product,
+            })
+          }>
           ADD TO CART
         </Button>
         <Button
@@ -175,7 +179,7 @@ const Product = ({route, navigation}) => {
           }}
           labelStyle={{fontSize: 18, fontWeight: 'bold'}}
           mode="contained"
-          onPress={() => navigation.navigate('Cart')}>
+          onPress={() => navigation.navigate('Checkout')}>
           BUY NOW
         </Button>
       </View>
