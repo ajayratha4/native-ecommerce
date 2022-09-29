@@ -1,19 +1,34 @@
 import {View, ScrollView} from 'react-native';
 import React from 'react';
-import {Button, Text, useTheme} from 'react-native-paper';
+import {ActivityIndicator, Button, Text, useTheme} from 'react-native-paper';
 import ProductCardList from '../../components/ProductCardList';
+import useAxios from '../../apis/useAxios';
+import {API} from '../../apis/const';
 
-const Cart = ({route, navigation}) => {
+const Cart = ({navigation}) => {
   const {colors} = useTheme();
-  const {product} = route.params;
-  console.log(product.name);
+
+  const {response = [], loading} = useAxios(API.GetOrders, {
+    params: {status: 'cart'},
+  });
+
+  if (loading) {
+    return (
+      <ActivityIndicator
+        style={{flex: 1, backgroundColor: colors.background}}
+        size={50}
+        animating={true}
+      />
+    );
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: colors.background}}>
       <Text>Cart</Text>
       <ScrollView>
-        {[1, 2, 3, 4, 5, 6].map(item => (
+        {response.map(item => (
           <ProductCardList
-            item={product}
+            item={item.productId}
             onclickProduct={i => {
               console.log(i);
             }}
@@ -22,8 +37,6 @@ const Cart = ({route, navigation}) => {
       </ScrollView>
       <View style={{marginTop: 5, alignItems: 'center'}}>
         <Button
-          // loading={loading}
-          // disabled={loading}
           style={{
             width: '80%',
             height: 50,

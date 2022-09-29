@@ -17,6 +17,12 @@ const Product = ({route, navigation}) => {
   const {item} = route.params;
   const [product, setProduct] = useState(item);
   const {response, loading, refetch} = useAxios(API.Product, {skip: true});
+  const {loading: orderLoading, refetch: orderRefetch} = useAxios(
+    API.CreateOrder,
+    {
+      skip: true,
+    },
+  );
 
   useEffect(() => {
     setProduct(item);
@@ -34,7 +40,18 @@ const Product = ({route, navigation}) => {
     });
   };
 
-  if (loading) {
+  const onAddCart = () => {
+    orderRefetch({
+      body: {
+        status: 'cart',
+        productId: product._id,
+        quantity: 1,
+      },
+    });
+    navigation.navigate('AppCart');
+  };
+
+  if (loading || orderLoading) {
     return (
       <ActivityIndicator
         style={{flex: 1, backgroundColor: colors.background}}
@@ -163,11 +180,7 @@ const Product = ({route, navigation}) => {
           }}
           labelStyle={{fontSize: 18, fontWeight: 'bold'}}
           mode="contained"
-          onPress={() =>
-            navigation.navigate('AppCart', {
-              product,
-            })
-          }>
+          onPress={onAddCart}>
           ADD TO CART
         </Button>
         <Button

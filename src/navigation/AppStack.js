@@ -18,7 +18,7 @@ const AppStack = () => {
         headerShown: true,
         header: props => <CustomNavigationBar {...props} />,
       }}>
-      <Stack.Screen name="TabStack" component={TabStack} />
+      {/* <Stack.Screen name="TabStack" component={TabStack} /> */}
       <Stack.Screen name="ProductList" component={ProductList} />
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="About" component={About} />
