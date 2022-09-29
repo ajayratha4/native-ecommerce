@@ -3,7 +3,13 @@ import {View} from 'react-native';
 import {Button, Card, Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const ProductCardList = ({item, onclickProduct}) => {
+const ProductCardList = ({
+  item,
+  quantity,
+  onclickProduct,
+  onClickRemove,
+  showRemove = true,
+}) => {
   const {name, price, image, review} = item;
 
   return (
@@ -18,7 +24,11 @@ const ProductCardList = ({item, onclickProduct}) => {
                 style={{textDecorationLine: 'line-through', marginRight: 2}}>
                 {price.actualPrice}
               </Text>
+
               <Text>₹{price.discountPrice}</Text>
+            </View>
+            <View>
+              <Text>{quantity}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
               <Ionicons name="star-sharp" />
@@ -27,12 +37,15 @@ const ProductCardList = ({item, onclickProduct}) => {
               <Ionicons name="star-sharp" />
             </View>
           </View>
-          <Button
-            mode="Outlined"
-            size="small"
-            style={{alignItems: 'center', justifyContent: 'center'}}>
-            remove
-          </Button>
+          {showRemove && (
+            <Button
+              onPress={onClickRemove}
+              mode="Outlined"
+              size="small"
+              style={{alignItems: 'center', justifyContent: 'center'}}>
+              remove
+            </Button>
+          )}
         </Card.Content>
       </View>
     </Card>

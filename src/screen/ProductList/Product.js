@@ -47,8 +47,10 @@ const Product = ({route, navigation}) => {
         productId: product._id,
         quantity: 1,
       },
+      onCompleted: res => {
+        navigation.navigate('AppCart');
+      },
     });
-    navigation.navigate('AppCart');
   };
 
   if (loading || orderLoading) {

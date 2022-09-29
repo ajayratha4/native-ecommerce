@@ -35,8 +35,8 @@ const SignInScreen = ({navigation}) => {
       showAlert('Email / Password should not be empty!');
       return null;
     }
-    if (password === confirmPassword) {
-      showAlert('Password abd Confirm Password should be same!');
+    if (password !== confirmPassword) {
+      showAlert('Password and Confirm Password should be same!');
       return null;
     }
 

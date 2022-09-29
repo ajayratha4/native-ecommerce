@@ -8,11 +8,34 @@ import {API} from '../../apis/const';
 const Cart = ({navigation}) => {
   const {colors} = useTheme();
 
-  const {response = [], loading} = useAxios(API.GetOrders, {
+  const {
+    response = [],
+    loading,
+    refetch,
+  } = useAxios(API.GetOrders, {
     params: {status: 'cart'},
   });
 
-  if (loading) {
+  const {loading: removeLoading, refetch: removeRefetch} = useAxios(
+    API.RemoveOrder,
+    {
+      skip: true,
+    },
+  );
+
+  const onRemove = id => {
+    removeRefetch({
+      body: {
+        status: 'cart',
+        _id: id,
+      },
+      onCompleted: res => {
+        refetch();
+      },
+    });
+  };
+
+  if (loading || removeLoading) {
     return (
       <ActivityIndicator
         style={{flex: 1, backgroundColor: colors.background}}
@@ -26,14 +49,19 @@ const Cart = ({navigation}) => {
     <View style={{flex: 1, backgroundColor: colors.background}}>
       <Text>Cart</Text>
       <ScrollView>
-        {response.map(item => (
+        {response?.res?.map(item => (
           <ProductCardList
+            quantity={item.quantity}
             item={item.productId}
+            onClickRemove={() => onRemove(item._id)}
             onclickProduct={i => {
               console.log(i);
             }}
           />
         ))}
+        <View>
+          <Text>Total :{response.totalPrice}</Text>
+        </View>
       </ScrollView>
       <View style={{marginTop: 5, alignItems: 'center'}}>
         <Button
@@ -44,7 +72,9 @@ const Cart = ({navigation}) => {
           }}
           labelStyle={{fontSize: 18, fontWeight: 'bold'}}
           mode="contained"
-          onPress={() => navigation.navigate('Checkout')}>
+          onPress={() =>
+            navigation.navigate('Checkout', {item: response?.res})
+          }>
           checkout
         </Button>
       </View>

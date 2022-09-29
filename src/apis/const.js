@@ -4,4 +4,5 @@ export const API = {
   Product: '/product/getProducts',
   GetOrders: '/order/get-orders',
   CreateOrder: '/order/create',
+  RemoveOrder: '/order/remove',
 };

@@ -1,7 +1,8 @@
 import {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
-// const baseURL = 'https://test-uimx.onrender.com';
-const baseURL = 'http://192.168.4.228:8080';
+import useSnackbar from '../components/hooks/useSnackbar';
+const baseURL = 'https://test-uimx.onrender.com';
+// const baseURL = 'http://192.168.4.228:8080';
 
 const Axios = axios.create({
   baseURL: baseURL,
@@ -14,6 +15,7 @@ const Axios = axios.create({
 });
 
 const useAxios = (path, rest = {}) => {
+  const {showAlert} = useSnackbar();
   const {params, skip, body, onCompleted} = rest;
   const check = useRef(false);
 
@@ -42,6 +44,7 @@ const useAxios = (path, rest = {}) => {
         }
       }
     } catch (err) {
+      showAlert(`${err.code} ${err.message}`);
       setError(err);
       apionCompleted(null, err.response.data);
     } finally {
@@ -57,8 +60,12 @@ const useAxios = (path, rest = {}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
-  const refetch = ({params, body, onCompleted}) => {
-    axiosFetch(params, body, onCompleted);
+  const refetch = props => {
+    axiosFetch(
+      props?.params || params,
+      props?.body || body,
+      props?.onCompleted,
+    );
   };
 
   return {response, loading, refetch, error};
